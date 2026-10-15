@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker, Session
 
 # 1. DATABASE CONFIGURATION
-
+  
 SQLALCHEMY_DATABASE_URL = "sqlite:///./inventory.db"
 
 engine = create_engine(
