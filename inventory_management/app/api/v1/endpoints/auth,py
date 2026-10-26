@@ -1,0 +1,24 @@
+from fastapi import APIRouter, BackgroundTasks, Depends
+from sqlalchemy.orm import Session
+from app.services.notification_service import notify_user_registration
+# Import your dependencies, database session getter, and schemas/crud
+
+router = APIRouter(prefix="/auth", tags=["Auth"])
+
+@router.register("/") # or /signup
+def register_user(
+    user_in: UserCreate,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    # Core DB operation
+    user = crud_user.create(db=db, obj_in=user_in)
+
+    # Trigger background registration email (securely omitting password/tokens)
+    background_tasks.add_task(
+        notify_user_registration,
+        username=user.username,
+        email=user.email
+    )
+
+    return {"message": "User registered successfully"}

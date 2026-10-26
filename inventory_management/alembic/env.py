@@ -26,7 +26,10 @@ if config.config_file_name is not None:
   fileConfig(config.config_file_name)
 
 # 3. Override sqlalchemy.url dynamically using your MySQL credentials from .env
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
+config.set_main_option(
+    "sqlalchemy.url", 
+    "mysql+pymysql://root:rootpassword123@localhost:3306/inventory_db"
+)
 
 # 4. Set target metadata for model change detection
 target_metadata = Base.metadata
